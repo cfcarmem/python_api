@@ -116,7 +116,6 @@ def baixar_documento(id_pessoa: int):
         filename=os.path.basename(path)
     )
 
-
 @router.put("/pessoas/{id_pessoa}")
 def atualizar_pessoa(
     id_pessoa: int,
@@ -176,6 +175,6 @@ def atualizar_pessoa(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-    
+
 def hash_md5(senha: str) -> str:
     return hashlib.md5(senha.encode("utf-8")).hexdigest()
