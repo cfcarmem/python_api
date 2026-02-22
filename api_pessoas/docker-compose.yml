@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: Cadastro
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    volumes:
+      - ./app:/app/app
+      - ./upload:/app/upload
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:1234@postgres:5432/Cadastro
+
+volumes:
+  pgdata:
+
+
+  #se o banco estivesse em outro servidor
+#   version: "3.9"
+
+# services:
+#   api:
+#     build: .
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       DB_HOST: db.empresa.com
+#       DB_PORT: 5432
+#       DB_NAME: pessoas
+#       DB_USER: app_user
+#       DB_PASSWORD: segredo
